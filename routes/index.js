@@ -4,12 +4,14 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+    user = req.session.user ? req.session.user : null
+  res.render('index', { title: 'Express', user: user });
 };
 
 var users = {'dave' : 'expressrocks' };
 exports.login = function(req, res, next){
     var user = req.body.user;
+    console.log(user);
     if(user) {
         Object.keys(users).forEach(function(name){
             if(user.name === name && user.pwd === users[name]) {
