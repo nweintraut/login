@@ -1,0 +1,2 @@
+{"ts":1368164201178,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1368164281017,"patch":[[{"diffs":[[1,"if user\n  form(method='post', action='/')\n    input(name=\"_method\", type=\"hidden\", value=\"DELETE\")\n    p Hello #Puser.name}\n       a(href='javascript:', onClick='forms[0].submit()')\n[logout]"]],"start1":0,"start2":0,"length1":0,"length2":190}]],"length":190,"saved":false}
