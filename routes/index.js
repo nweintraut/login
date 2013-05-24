@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-    user = req.session.user ? req.session.user : null
+    var user = req.session.user ? req.session.user : null;
   res.render('index', { title: 'Express', user: user });
 };
 

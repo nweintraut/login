@@ -15,12 +15,20 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser('kooBkooCedoN'));
   app.use(express.session());
+ 
+  app.use(function(req,res, next){
+      res.locals.user = req.session.user ? req.session.user : null;
+      next();
+  });
+  
+  app.use(require('./login'));
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -30,8 +38,9 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.post('/', routes.login, routes.index);
-app.del('/', routes.logout, routes.index);
+app.post('/', routes.index);
+app.del('/', routes.index);
+app.get('/:page', routes.index);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
