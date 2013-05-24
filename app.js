@@ -7,7 +7,8 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , flash = require('connect-flash');
 
 var app = express();
 
@@ -22,9 +23,10 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser('kooBkooCedoN'));
   app.use(express.session());
- 
+  app.use(flash());
   app.use(function(req,res, next){
       res.locals.user = req.session.user ? req.session.user : null;
+      res.locals.flash = flash(); // this doesn't achieve the desired result.
       next();
   });
   

@@ -15,13 +15,32 @@ module.exports = function(req, res, next){
         });
     }
     if(logout) {delete req.session.user;}
+    
+    function validate(user, cb){
+        var valid = Object.keys(users).some(function(name){
+           return (user.name === name && user.pwd === users[name]); 
+        });        
+        cb((!valid && {msg:'Login details invalid!'}));
+    }
     if(login) {
+        validate(user, function(err) {
+            if (err) {
+                console.log("Error is: " + err.msg);
+                req.flash('error', err.msg); 
+                res.locals.flash = req.flash();
+                return;
+            }
+            req.session.user = { name: user.name, pwd: user.pwd};
+        });
+        
+        /*
         Object.keys(users).forEach(function(name){
             console.log( user.name + " " + user.pwd);
            if(user.name === name && user.pwd === users[name]){
                req.session.user = {name: user.name, pwd: user.pwd};
            } 
         });
+        */
     }
     if(!req.session.user) {req.url = '/';}
     next();
